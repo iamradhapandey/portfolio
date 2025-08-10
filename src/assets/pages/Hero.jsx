@@ -1,113 +1,111 @@
-import React from "react"
-import { motion } from "framer-motion"
-import { FaArrowRight, FaGithub, FaLinkedin, FaArrowDown } from "react-icons/fa"
-import { Link } from "react-router-dom"
-import { Typewriter } from "react-simple-typewriter"
+// Hero.jsx
+import React from "react";
+import { motion } from "framer-motion";
+import { FaGithub, FaLinkedin, FaReact, FaBolt } from "react-icons/fa";
+import { SiTailwindcss, SiFramer, SiJavascript } from "react-icons/si";
+import { TypeAnimation } from "react-type-animation";
 
 const Hero = () => {
   return (
-    <section className="min-h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-20 relative bg-gradient-to-br from-indigo-100 via-white to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-all duration-500 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col md:flex-row items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white px-8 pt-24 md:pt-0">
+      
+      {/* Left Content */}
+      <div className="flex-1 max-w-xl text-center md:text-left">
+        <motion.h1
+          className="text-4xl md:text-6xl font-bold mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          Hi, I'm <span className="text-purple-400">Radha Kumari</span>
+        </motion.h1>
 
-      {/* SVG Background Shape */}
-      <div className="absolute -z-10 top-0 right-0 md:right-20 opacity-20 dark:opacity-30">
-        <svg width="600" height="600" viewBox="0 0 600 600" fill="none">
-          <path fill="#a78bfa" d="M300,421Q252,542,133,470Q14,398,79,251Q144,104,282,106Q420,108,455,229Q490,350,300,421Z" />
-        </svg>
-      </div>
-
-      {/* Left Text Content */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-center md:text-left max-w-2xl space-y-6 z-10"
-      >
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-          Hi, I'm Radha Kumari
-        </h1>
-
-        <p className="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 font-medium">
-          <Typewriter
-            words={['React Developer 💻', 'UX Designer 🎨', 'Frontend Engineer 🚀']}
-            loop={0}
-            cursor
-            cursorStyle="|"
-            typeSpeed={70}
-            deleteSpeed={50}
-            delaySpeed={1000}
+        <motion.div
+          className="text-lg md:text-xl font-semibold mb-6 text-gray-300"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <TypeAnimation
+            sequence={[
+              "Frontend Developer 💻",
+              2000,
+              "UI/UX Enthusiast 🎨",
+              2000,
+              "GSAP Animation Lover ⚡",
+              2000,
+            ]}
+            wrapper="span"
+            speed={50}
+            repeat={Infinity}
           />
-        </p>
+        </motion.div>
 
-        <p className="text-md sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-          I'm a React developer focused on building responsive, accessible, and beautiful web apps. With a passion for clean design and functional code, I blend creativity and logic to craft seamless user experiences.
-        </p>
-
-        <p className="text-indigo-600 dark:text-indigo-400 font-semibold">
-          Let’s build something great together!
+        <p className="text-gray-400 mb-6 leading-relaxed">
+          I'm a React developer focused on building responsive, accessible, and
+          beautiful web apps. I blend creativity with logic to craft seamless
+          user experiences.
         </p>
 
         {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+        <div className="flex gap-4 justify-center md:justify-start mb-6">
           <a
-            href="https://drive.google.com/file/d/1O-sCpn-F_ownoCSqWGAcp98FNPeKOtFA/view?usp=drive_link"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 py-3 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition duration-300 flex items-center gap-2"
+            href="#"
+            className="px-6 py-3 bg-purple-500 hover:bg-purple-600 rounded-full font-semibold transition shadow-lg shadow-purple-500/30"
           >
-            View Resume <FaArrowRight />
+            View Resume →
           </a>
-
-          <Link
-            to="/contact"
-            className="px-6 py-3 border border-indigo-600 text-indigo-600 dark:text-indigo-400 rounded-full font-semibold hover:bg-indigo-50 dark:hover:bg-gray-800 transition duration-300"
+          <a
+            href="#contact"
+            className="px-6 py-3 border border-purple-400 hover:bg-purple-500 hover:text-white rounded-full font-semibold transition"
           >
             Contact Me
-          </Link>
+          </a>
         </div>
 
         {/* Social Links */}
-        <div className="flex justify-center md:justify-start gap-6 mt-4 text-2xl text-gray-600 dark:text-gray-300">
-          <a href="https://github.com/iamradhapandey" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600">
-            <FaGithub />
+        <div className="flex gap-4 justify-center md:justify-start">
+          <a href="#" className="hover:text-purple-400 transition">
+            <FaGithub size={28} />
           </a>
-          <a href="https://www.linkedin.com/in/iamradhapandey" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600">
-            <FaLinkedin />
+          <a href="#" className="hover:text-purple-400 transition">
+            <FaLinkedin size={28} />
           </a>
         </div>
+      </div>
 
-        {/* Tech Stack */}
-        <div className="mt-6 text-sm text-gray-500 dark:text-gray-400">
-          Tech Stack: React • Tailwind CSS • Framer Motion • Typewriter • React Router
+      {/* Right Image */}
+      <motion.div
+        className="flex-1 flex justify-center mt-12 md:mt-0"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+      >
+        <div className="relative">
+          <img
+            src="/public/profile.jpg"
+            alt="Radha"
+            className="w-64 h-64 md:w-80 md:h-80  object-cover rounded-full border-4 border-purple-400 shadow-lg"
+          />
+          <div className="absolute -inset-2 rounded-full bg-purple-500 blur-3xl opacity-30 animate-pulse"></div>
         </div>
-
-        {/* Scroll Down Indicator */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
-  <div className="animate-bounce text-gray-600 dark:text-gray-300 text-sm tracking-wide">
-    Scroll Down ↓
-  </div>
-</div>
-
       </motion.div>
 
-      {/* Right Side Avatar Image */}
-      {/* Right Side Avatar Image */}
-<motion.div
-  initial={{ opacity: 0, x: 50 }}
-  animate={{ opacity: 1, x: 0 }}
-  transition={{ duration: 0.8 }}
-  className="mt-10 md:mt-0 z-10"
->
-  <div className="relative w-[320px] h-[320px] sm:w-[360px] sm:h-[360px] md:w-[400px] md:h-[400px] lg:w-[440px] lg:h-[440px] mx-auto rounded-full overflow-hidden border-4 border-white shadow-[0_0_50px_0_rgba(99,102,241,0.6)] hover:scale-105 transition-transform duration-500 bg-gradient-to-tr from-pink-400 via-purple-500 to-indigo-500">
-    <img
-      src="/profile.jpg" // ✅ Update this path as per your image
-      alt="Radha Kumari"
-      className="w-full h-full object-cover rounded-full"
-    />
-  </div>
-</motion.div>
-
+      {/* Floating Tech Icons */}
+      <motion.div
+        className="absolute bottom-8 left-8 flex gap-4 text-3xl text-purple-300 opacity-70"
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
+        transition={{ repeat: Infinity, duration: 2, repeatType: "reverse" }}
+      >
+        <FaReact />
+        <SiTailwindcss />
+        <SiFramer />
+        <SiJavascript />
+        <FaBolt />
+      </motion.div>
     </section>
-  )
-}
+  );
+};
 
 export default Hero;
