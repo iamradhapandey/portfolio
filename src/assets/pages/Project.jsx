@@ -174,327 +174,231 @@
 // export default Projects;
 
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Thumbs } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
 
-/**
- * Projects page with modal popup.
- * Put screenshots in /public/images/ (or change the img paths below).
- */
-
-const projectData = [
+const projects = [
   {
-    id: "glamthreadz",
-    title: "GlamThreadz - E-Commerce",
-    short:
-      "Fashion e-commerce with product listing, cart and responsive layout.",
-    desc:
-      "A modern e-commerce store built using React and Tailwind. Implements product browsing, cart management and checkout flows (demo hosted).",
-    features: [
-      "Product listing & filtering",
-      "Cart with local state & persistence",
-      "Responsive product pages",
-    ],
-    tech: ["React", "TailwindCSS", "Redux", "Node.js"],
-    img: "/images/glamthreadz.png",
-    live: "https://glam-threadz-e-commerce-dwpi-kt6jhc5e6-iamradhapandeys-projects.vercel.app/",
-    github: "https://github.com/iamradhapandey/GlamThreadz-E-Commerce-",
+    title: "GauSevaDham",
+    description:
+      "A spiritual and community-focused platform with events, blogs, and more.",
+    tech: ["React", "TailwindCSS", "Framer Motion"],
+    images: ["/gau1.png", "/gau2.png", "/gau3.png"],
+    link: "https://github.com/iamradhapandey/GauSevaDham",
+    github: "https://github.com/iamradhapandey/GauSevaDham"
   },
   {
-    id: "miranda",
-    title: "Miranda",
-    short: "Creative studio landing page with large typography and scroll effects.",
-    desc:
-      "A minimal, editorial-style landing page inspired by creative studio designs. Focus on typography, layout and subtle scroll interactions.",
-    features: ["Large typography", "Scroll layout", "GSAP-style animations"],
-    tech: ["HTML", "CSS", "JavaScript", "GSAP"],
-    img: "/images/miranda.png",
-    live: "https://iamradhapandey.github.io/Miranda/",
-    github: "https://github.com/iamradhapandey/Miranda",
+    title: "GlamThreadz E-Commerce",
+    description:
+      "Fashion e-commerce store with product filtering, cart, and checkout.",
+    tech: ["React", "TailwindCSS", "Redux", "MongoDB", "Express.js"],
+    images: ["/glam1.png", "/glam2.png", "/glam3.png"],
+    link: "https://github.com/iamradhapandey/GlamThreadz-E-Commerce-",
+    github: "https://github.com/iamradhapandey/GlamThreadz-E-Commerce-"
   },
   {
-    id: "humaan",
-    title: "Digital Product Agency - Humaan",
-    short: "Agency landing page showcasing services and case studies.",
-    desc:
-      "Agency style site with service sections, case study highlights and clean responsive layout.",
-    features: ["Service showcase", "Case studies", "Responsive design"],
-    tech: ["HTML", "CSS", "JavaScript"],
-    img: "/images/humaan.png",
-    live: "https://iamradhapandey.github.io/Digital-Product-Agency-Humaan/",
-    github: "https://github.com/iamradhapandey/Digital-Product-Agency-Humaan",
+    title: "Apple Vision UI",
+    description: "Apple Vision Pro inspired landing page with smooth animations.",
+    tech: ["React", "GSAP", "Three.js"],
+    images: ["/apple.png", "/apple1.png", "/apple2.png"],
+    link: "https://iamradhapandey.github.io/FRONTEND-PROJECT-Apple-vision-/",
+    github: "https://github.com/iamradhapandey/FRONTEND-PROJECT-Apple-vision-"
   },
   {
-    id: "mivi",
-    title: "Reimagin — Mivi Clone",
-    short: "Product landing page clone with product highlights and animations.",
-    desc:
-      "A modern product landing clone inspired by Mivi — focuses on hero visuals, product features and animated interactions.",
-    features: ["Hero interaction", "Animated sections", "Responsive"],
-    tech: ["HTML", "CSS", "JavaScript", "GSAP"],
-    img: "/images/mivi.png",
-    live: "https://iamradhapandey.github.io/-Reimagin-mivi-clone/",
-    github: "https://github.com/iamradhapandey/-Reimagin-mivi-clone",
-  },
-  {
-    id: "premiermodels",
-    title: "Permier Models",
-    short: "Model portfolio site with editorial layout and imagery.",
-    desc:
-      "A stylish portfolio layout for models and creatives with strong visual emphasis and clean typography.",
-    features: ["Gallery layout", "Editorial typography", "Responsive grid"],
-    tech: ["HTML", "CSS", "JavaScript"],
-    img: "/images/premiermodels.png",
-    live: "https://iamradhapandey.github.io/Permier_Models/",
-    github: "https://github.com/iamradhapandey/Permier_Models",
-  },
-  {
-    id: "cyberfiction",
-    title: "CYBERFICTION",
-    short: "Futuristic concept site with immersive visuals (Three.js).",
-    desc:
-      "A creative concept site using 3D visuals and strong hero imagery — great example of modern web visuals and layout.",
-    features: ["3D visuals", "Hero composition", "Immersive design"],
-    tech: ["HTML", "CSS", "JavaScript", "Three.js"],
-    img: "/images/cyberfiction.png",
-    live: "https://iamradhapandey.github.io/CYBERFICTION/",
-    github: "https://github.com/iamradhapandey/CYBERFICTION",
-  },
-  {
-    id: "digital3d",
     title: "Digital 3D Platform",
-    short: "Interactive 3D platform demo showcasing WebGL visuals.",
-    desc:
-      "An interactive 3D experience built with Three.js and creative layout techniques to display 3D assets in the browser.",
-    features: ["Three.js scenes", "Interactive controls", "Immersive visuals"],
-    tech: ["HTML", "CSS", "JavaScript", "Three.js"],
-    img: "/images/digital3d.png",
-    live: "https://iamradhapandey.github.io/Digital-3D-Platfrom/",
-    github: "https://github.com/iamradhapandey/Digital-3D-Platfrom",
+    description:
+      "Interactive 3D platform for showcasing creative digital products.",
+    tech: ["React", "Three.js", "TailwindCSS"],
+    images: ["/d3d1.png", "/d3d2.png", "/d3d3.png"],
+    link: "https://github.com/iamradhapandey/Digital-3D-Platfrom",
+    github: "https://github.com/iamradhapandey/Digital-3D-Platfrom"
   },
   {
-    id: "sphereclockwork",
-    title: "Sphere Clockwork",
-    short: "3D clockwork animation — WebGL demo (beautiful visuals).",
-    desc:
-      "A visually-strong project demonstrating WebGL / Three.js animation. Great hero composition and motion.",
-    features: ["3D clock animation", "WebGL rendering", "Polished visuals"],
-    tech: ["HTML", "CSS", "JavaScript", "Three.js"],
-    img: "/images/sphereclockwork.png",
-    live: "https://iamradhapandey.github.io/SphereClockwork/",
-    github: "https://github.com/iamradhapandey/SphereClockwork",
+    title: "Reimagin Mivi Clone",
+    description:
+      "Modern Mivi website clone with interactive scrolling animations.",
+    tech: ["React", "GSAP", "TailwindCSS"],
+    images: ["/mivi.png", "/mivi2.png", "/mivi3.png"],
+    link: "https://github.com/iamradhapandey/-Reimagin-mivi-clone",
+    github: "https://github.com/iamradhapandey/-Reimagin-mivi-clone"
   },
+  {
+    title: "Premier Models",
+    description: "Stylish model portfolio website with animations.",
+    tech: ["React", "GSAP", "TailwindCSS"],
+    images: ["/pm1.png", "/pm2.png", "/pm3.png"],
+    link: "https://github.com/iamradhapandey/Permier_Models",
+    github: "https://github.com/iamradhapandey/Permier_Models"
+  },
+  {
+    title: "Digital Product Agency – Humaan",
+    description: "Agency-style website for a modern digital product company.",
+    tech: ["React", "Framer Motion", "TailwindCSS"],
+    images: ["/humaan.png", "/humaan2.png", "/humaan3.png"],
+    link: "https://github.com/iamradhapandey/Digital-Product-Agency-Humaan",
+    github: "https://github.com/iamradhapandey/Digital-Product-Agency-Humaan"
+  },
+  {
+    title: "CYBERFICTION",
+    description:
+      "Futuristic web experience built with Three.js and advanced GSAP animations.",
+    tech: ["React", "Three.js", "GSAP"],
+    images: ["/cyber1.png", "/cyber2.png", "/cyber3.png"],
+    link: "https://github.com/iamradhapandey/CYBERFICTION",
+    github: "https://github.com/iamradhapandey/CYBERFICTION"
+  },
+  {
+    title: "Miranda",
+    description:
+      "Creative animated portfolio site for visual storytelling.",
+    tech: ["HTML", "CSS", "GSAP"],
+    images: ["/miranda.png", "/miranda2.png", "/miranda3.png"],
+    link: "https://github.com/iamradhapandey/Miranda",
+    github: "https://github.com/iamradhapandey/Miranda"
+  },
+  {
+    title: "Sphere Clockwork",
+    description:
+      "3D animated sphere clock with smooth transitions and real-time ticking.",
+    tech: ["React", "Three.js", "TailwindCSS"],
+    images: ["/sphereclockwork.png", "/sphereclockwork2.png", "/sphereclockwork3.png"],
+    link: "https://iamradhapandey.github.io/SphereClockwork/",
+    github: "https://github.com/iamradhapandey/SphereClockwork"
+  }
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-
-const cardVariant = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.06, duration: 0.45, ease: "easeOut" },
-  }),
-};
-
 export default function Projects() {
-  const [selected, setSelected] = useState(null); // project object or null
+  const [open, setOpen] = useState(false);
+  const [activeImages, setActiveImages] = useState([]);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
-  // close modal on ESC
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === "Escape") setSelected(null);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  const openModal = (images) => {
+    setActiveImages(images);
+    setOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setOpen(false);
+    document.body.style.overflow = "auto";
+  };
 
   return (
-    <section className="px-6 py-12 bg-gray-900 text-white min-h-screen">
-      <div className="max-w-6xl mx-auto">
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl font-bold text-center mb-10"
-        >
-          My Projects
-        </motion.h2>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {projectData.map((p, idx) => (
-            <motion.article
-              key={p.id}
-              custom={idx}
-              variants={cardVariant}
-              className="bg-gray-800 rounded-2xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition"
-              onClick={() => setSelected(p)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") setSelected(p);
-              }}
-            >
-              <div className="h-44 w-full overflow-hidden">
-                <img
-                  src={p.img}
-                  alt={p.title}
-                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-
-              <div className="p-5">
-                <h3 className="text-xl font-semibold">{p.title}</h3>
-                <p className="text-gray-300 text-sm mt-2">{p.short}</p>
-
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {p.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-xs px-2 py-1 bg-gray-700/60 rounded-full"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-5 flex gap-3">
-                  <a
-                    href={p.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="flex-1 text-center bg-gradient-to-r from-purple-500 to-pink-500 px-3 py-2 rounded-md hover:opacity-90 transition"
-                  >
-                    Live
-                  </a>
-                  <a
-                    href={p.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="flex-1 text-center border border-gray-600 px-3 py-2 rounded-md hover:border-white transition"
-                  >
-                    GitHub
-                  </a>
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </motion.div>
+    <div className="px-6 py-12 bg-gradient-to-b from-gray-900 to-black text-white">
+      <h2 className="text-4xl font-bold text-center mb-10">Projects</h2>
+      <div className="grid md:grid-cols-2 gap-8">
+        {projects.map((project, i) => (
+          <div
+            key={i}
+            className="bg-white/5 border border-white/10 rounded-2xl p-5 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-transform backdrop-blur-lg"
+          >
+            <LazyLoadImage
+              src={project.images[0]}
+              effect="blur"
+              className="w-full h-64 object-cover rounded-xl cursor-pointer"
+              onClick={() => openModal(project.images)}
+            />
+            <h3 className="text-2xl font-semibold mt-4">{project.title}</h3>
+            <p className="mt-2 text-gray-300">{project.description}</p>
+            <div className="flex flex-wrap gap-2 mt-4">
+              {project.tech.map((t, idx) => (
+                <span
+                  key={idx}
+                  className="px-3 py-1 text-sm bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+            <div className="mt-4 flex gap-4">
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:underline"
+              >
+                Live Demo
+              </a>
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-400 hover:underline"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Modal */}
-      <AnimatePresence>
-        {selected && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelected(null)}
-            aria-modal="true"
-            role="dialog"
-          >
-            {/* backdrop */}
-            <motion.div
-              className="absolute inset-0 bg-black/70"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+      {/* Modal */}
+{open && (
+  <div
+    className="fixed inset-0 bg-black/70 backdrop-blur-lg flex items-center justify-center z-50 p-4"
+    onClick={closeModal} // click outside to close
+  >
+    <div
+      className="bg-white/10 rounded-2xl p-4 max-w-4xl w-full relative"
+      onClick={(e) => e.stopPropagation()} // stop closing when clicking inside
+    >
+      {/* Close Button */}
+      <button
+        onClick={closeModal}
+        className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center 
+        bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition z-50"
+        aria-label="Close"
+      >
+        ✕
+      </button>
+
+      {/* Main Carousel */}
+      <Swiper
+        modules={[Navigation, Thumbs]}
+        navigation
+        thumbs={{ swiper: thumbsSwiper }}
+        className="rounded-xl"
+      >
+        {activeImages.map((src, idx) => (
+          <SwiperSlide key={idx}>
+            <img
+              src={src}
+              alt={`Screenshot ${idx + 1}`}
+              className="w-full h-[400px] object-contain"
             />
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-            {/* modal content */}
-            <motion.div
-              className="relative bg-white text-gray-900 rounded-2xl max-w-4xl w-full shadow-2xl overflow-hidden"
-              initial={{ scale: 0.95, y: 20, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.95, y: 20, opacity: 0 }}
-              transition={{ duration: 0.28 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="h-80 md:h-auto bg-black/5 flex items-center justify-center overflow-hidden">
-                  <img
-                    src={selected.img}
-                    alt={selected.title}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
+      {/* Thumbnails */}
+      <Swiper
+        onSwiper={setThumbsSwiper}
+        slidesPerView={4}
+        spaceBetween={10}
+        watchSlidesProgress
+        className="mt-4"
+      >
+        {activeImages.map((src, idx) => (
+          <SwiperSlide key={idx}>
+            <img
+              src={src}
+              alt={`Thumb ${idx + 1}`}
+              className="w-full h-20 object-cover rounded-lg cursor-pointer border border-white/20"
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  </div>
+)}
 
-                <div className="p-6 flex flex-col">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-2xl font-bold">{selected.title}</h3>
-                      <p className="text-sm text-gray-600 mt-2">{selected.desc}</p>
-                    </div>
-
-                    <button
-                      className="ml-auto text-gray-500 hover:text-gray-800"
-                      onClick={() => setSelected(null)}
-                      aria-label="Close"
-                    >
-                      ✕
-                    </button>
-                  </div>
-
-                  <div className="mt-4">
-                    <h4 className="font-semibold text-gray-700">Features</h4>
-                    <ul className="list-disc list-inside mt-2 text-gray-600">
-                      {selected.features.map((f, i) => (
-                        <li key={i}>{f}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-4">
-                    <h4 className="font-semibold text-gray-700">Tech</h4>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {selected.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="text-xs px-2 py-1 bg-gray-100 rounded-full border"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="mt-auto flex gap-3">
-                    <a
-                      href={selected.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-                    >
-                      View Live
-                    </a>
-                    <a
-                      href={selected.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block px-4 py-2 border border-gray-300 rounded-md hover:border-gray-500 transition"
-                    >
-                      View GitHub
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
+    </div>
   );
 }
