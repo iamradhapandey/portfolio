@@ -173,8 +173,8 @@
 
 // export default Projects;
 
-
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion"; // ✅ Add AnimatePresence
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -182,7 +182,6 @@ import { Navigation, Thumbs } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-
 const projects = [
   {
     title: "GauSevaDham",
@@ -290,7 +289,7 @@ export default function Projects() {
   };
 
   return (
-    <div className="px-6 py-12 bg-gradient-to-b from-gray-900 to-black text-white">
+    <div className="px-6 py-12 bg-gradient-to-b from-black to-black text-white">
       <h2 className="text-4xl font-bold text-center mb-10">Projects</h2>
       <div className="grid md:grid-cols-2 gap-8">
         {projects.map((project, i) => (
@@ -301,7 +300,7 @@ export default function Projects() {
             <LazyLoadImage
               src={project.images[0]}
               effect="blur"
-              className="w-full h-64 object-cover rounded-xl cursor-pointer"
+              className="w-full h-64 object-cover rounded-xl cursor-pointer transition-transform hover:scale-105"
               onClick={() => openModal(project.images)}
             />
             <h3 className="text-2xl font-semibold mt-4">{project.title}</h3>
@@ -339,65 +338,83 @@ export default function Projects() {
       </div>
 
       {/* Modal */}
-      {/* Modal */}
-{open && (
-  <div
-    className="fixed inset-0 bg-black/70 backdrop-blur-lg flex items-center justify-center z-50 p-4"
-    onClick={closeModal} // click outside to close
-  >
-    <div
-      className="bg-white/10 rounded-2xl p-4 max-w-4xl w-full relative"
-      onClick={(e) => e.stopPropagation()} // stop closing when clicking inside
+  
+<AnimatePresence>
+  {open && (
+    <motion.div
+      key="modal"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 bg-black/70 backdrop-blur-lg flex items-center justify-center z-50 p-4"
+      onClick={closeModal} // click outside closes
     >
-      {/* Close Button */}
-      <button
-        onClick={closeModal}
-        className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center 
-        bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition z-50"
-        aria-label="Close"
+      <motion.div
+        key="modal-content"
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="bg-white/10 rounded-2xl p-4 max-w-4xl w-full relative"
+        onClick={(e) => e.stopPropagation()}
       >
-        ✕
-      </button>
+        {/* Close Button */}
+        <button
+          onClick={() => {
+            setThumbsSwiper(null); // reset thumbs
+            closeModal();
+          }}
+          className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center 
+          bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition z-50"
+        >
+          ✕
+        </button>
 
-      {/* Main Carousel */}
-      <Swiper
-        modules={[Navigation, Thumbs]}
-        navigation
-        thumbs={{ swiper: thumbsSwiper }}
-        className="rounded-xl"
-      >
-        {activeImages.map((src, idx) => (
-          <SwiperSlide key={idx}>
-            <img
-              src={src}
-              alt={`Screenshot ${idx + 1}`}
-              className="w-full h-[400px] object-contain"
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        {/* Main Carousel */}
+        <Swiper
+          modules={[Navigation, Thumbs]}
+          navigation
+          thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined} // only pass if ready
+          className="rounded-xl"
+        >
+          {activeImages.map((src, idx) => (
+            <SwiperSlide key={idx}>
+              <img
+                src={src}
+                alt={`Screenshot ${idx + 1}`}
+                className="w-full h-[400px] object-contain"
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
-      {/* Thumbnails */}
-      <Swiper
-        onSwiper={setThumbsSwiper}
-        slidesPerView={4}
-        spaceBetween={10}
-        watchSlidesProgress
-        className="mt-4"
-      >
-        {activeImages.map((src, idx) => (
-          <SwiperSlide key={idx}>
-            <img
-              src={src}
-              alt={`Thumb ${idx + 1}`}
-              className="w-full h-20 object-cover rounded-lg cursor-pointer border border-white/20"
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
-  </div>
-)}
+        {/* Thumbnails */}
+       
+<Swiper
+  onSwiper={setThumbsSwiper}
+  slidesPerView={4}
+  spaceBetween={10}
+  watchSlidesProgress
+  className="mt-4"
+>
+  {activeImages.map((src, idx) => (
+    <SwiperSlide key={idx}>
+      <img
+        src={src}
+        alt={`Thumb ${idx + 1}`}
+        className="w-full h-64 object-cover rounded-lg cursor-pointer border border-white/20"
+      />
+    </SwiperSlide>
+  ))}
+</Swiper>
+
+
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
 
     </div>
   );

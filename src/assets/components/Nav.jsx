@@ -1,124 +1,72 @@
-// Navbar.jsx
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { FaBolt } from "react-icons/fa";
+
 
 const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
+  
 
-  // Detect scroll
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menu on route change
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [location]);
-
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Projects", path: "/projects" },
-    { name: "Contact", path: "/contact" },
+    { to: "/", label: "Home" },
+    { to: "/about", label: "About" },
+    { to: "/work", label: "Work" },
+    { to: "/contact", label: "Contact" },
   ];
 
   return (
-    <motion.nav
-      initial={{ y: -80 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="w-full fixed top-0 left-0 z-50"
-    >
-      <motion.div
-  animate={{
-    paddingTop: scrolled ? "0.5rem" : "1rem",
-    paddingBottom: scrolled ? "0.5rem" : "1rem",
-    scale: scrolled ? 0.95 : 1,
-  }}
-  transition={{ duration: 0.3, ease: "easeInOut" }}
-  className={`max-w-7xl mx-auto px-6 flex items-center justify-between rounded-2xl mt-4 border backdrop-blur-xl transition-all ${
-    scrolled
-      ? "bg-white/20 border-white/30 shadow-lg"
-      : "bg-white/20 border-white/30"
-  }`}
->
-
-        {/* Logo */}
-        <Link
-          to="/"
-          className="flex items-center gap-2 text-2xl font-bold text-indigo-700"
+    <nav className="fixed top-0 left-0 w-full z-[99] flex justify-center">
+      {/* Glass Effect Container */}
+      <div
+        className={`px-4 py-3 rounded-3xl text-base font-semibold flex items-center
+          bg-gradient-to-br from-glassBg1 to-glassBg2 backdrop-blur-[10px]
+          border border-glassBorder shadow-glass w-auto mt-2 transition-colors duration-300`}
+      >
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden mr-3 text-white transition-colors duration-300"
+          onClick={toggleMenu}
         >
-          <FaBolt className="text-yellow-400 animate-pulse" />
-          <span className="tracking-wide">Radha's Portfolio</span>
-        </Link>
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-10">
-          {navLinks.map((link, idx) => (
-            <Link
-              key={idx}
-              to={link.path}
-              className={`relative text-lg font-medium group transition-all duration-300 ${
-                location.pathname === link.path
-                  ? "text-indigo-600"
-                  : "text-gray-800 hover:text-indigo-600"
-              }`}
+        {/* Links */}
+        <div
+          className={`${
+            isOpen ? "flex" : "hidden"
+          } md:flex flex-col md:flex-row gap-[1vw]`}
+        >
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              className={({ isActive }) =>
+                `no-underline px-4 py-1 transition-all duration-300 ease-in-out rounded-full text-white ${
+                  isActive
+                    ? "bg-[#131713] text-[#A7FF99]"
+                    : "hover:bg-[#131713] hover:text-[#A7FF99]"
+                }`
+              }
+              onClick={() => setIsOpen(false)}
             >
-              {link.name}
-              <span
-                className={`absolute left-0 -bottom-1 h-[2px] bg-indigo-600 transition-all duration-300 ${
-                  location.pathname === link.path ? "w-full" : "w-0 group-hover:w-full"
-                }`}
-              ></span>
-            </Link>
+              {link.label}
+            </NavLink>
           ))}
         </div>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="text-gray-800 hover:text-indigo-600"
-          >
-            {menuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-      </motion.div>
-
-      {/* Mobile Dropdown */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden mt-3 mx-4 p-6 rounded-xl bg-white/30 backdrop-blur-xl shadow-lg border border-white/40 space-y-6"
-          >
-            {navLinks.map((link, idx) => (
-              <Link
-                key={idx}
-                to={link.path}
-                className={`block text-lg font-medium transition-all duration-300 ${
-                  location.pathname === link.path
-                    ? "text-indigo-600"
-                    : "text-gray-800 hover:text-indigo-600"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+      </div>
+    </nav>
   );
 };
 
