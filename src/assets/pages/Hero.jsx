@@ -357,13 +357,13 @@ export default function Home() {
               <div className="p-5">
                 <h3 className="text-lg font-semibold">{p.title}</h3>
                 <p className="mt-1 text-sm text-zinc-400">{p.desc}</p>
-                <div className="mt-3 inline-flex items-center gap-1 text-cyan-300">
+                {/* <div className="mt-3 inline-flex items-center gap-1 text-cyan-300">
                   See details{" "}
                   <ArrowRight
                     size={16}
                     className="transition group-hover:translate-x-0.5"
                   />
-                </div>
+                </div> */}
               </div>
               {/* Glow on hover */}
               <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition">
@@ -435,7 +435,7 @@ export default function Home() {
             ></div>
             <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
               <img
-                src="/Workshop.png" // ✅ Fixed path
+                src="/Workshop.jpeg" // ✅ Fixed path
                 alt="Workshop"
                 className="h-56 w-full object-cover"
               />
