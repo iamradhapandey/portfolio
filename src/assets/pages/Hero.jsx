@@ -223,48 +223,32 @@ export default function Home() {
           </div>
 
           {/* Right: Animated Blob with Photo */}
+
           <div className="relative">
             {/* Glow ring */}
             <div
               className="absolute -inset-6 rounded-[32px] bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-purple-500/20 blur-2xl"
-              aria-hidden
+              aria-hidden="true"
             ></div>
 
             <motion.div
               initial={{ rotate: -6, scale: 0.95, opacity: 0 }}
               animate={{ rotate: 0, scale: 1, opacity: 1 }}
               transition={{ type: "spring", stiffness: 60, damping: 12 }}
-              className="relative aspect-square w-72 sm:w-80 md:w-96 mx-auto"
+              className="relative aspect-square w-72 sm:w-80 md:w-96 mx-auto overflow-hidden rounded-[48px] border border-white/10 bg-white/5 backdrop-blur"
             >
-              <svg viewBox="0 0 600 600" className="absolute inset-0">
-                <defs>
-                  <clipPath id="blobClip" clipPathUnits="objectBoundingBox">
-                    {/* Path normalized to 0..1 via viewBox usage */}
-                    <path
-                      d="M452.5,319.5Q435,389,374.5,440.5Q314,492,241,466.5Q168,441,117,384.5Q66,328,76.5,252Q87,176,148.5,128Q210,80,293,83.5Q376,87,427.5,152Q479,217,452.5,319.5Z"
-                      transform="translate(-60 -40) scale(1.2)"
-                    />
-                  </clipPath>
-                </defs>
-              </svg>
-              <motion.div
-                className="absolute inset-0 rounded-[48px]"
-                animate={{ rotate: [0, 2, -2, 0] }}
+              {/* 👇 Directly show the profile image */}
+              <motion.img
+                src="/profile.png"
+                alt="Profile"
+                className="h-full w-full object-cover"
+                animate={{ scale: [1, 1.05, 1] }}
                 transition={{
-                  duration: 12,
+                  duration: 8,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-              >
-                <div className="absolute inset-0 rounded-[48px] bg-gradient-to-br from-cyan-500/30 via-blue-500/20 to-purple-500/30 blur-2xl" />
-                <div className="relative h-full w-full [clip-path:url(#blobClip)] overflow-hidden rounded-[48px]">
-                  <img
-                    src="/profile.png"
-                    alt="Radha Pandey"
-                    className="h-full w-full object-cover scale-105"
-                  />
-                </div>
-              </motion.div>
+              />
             </motion.div>
           </div>
         </div>
@@ -451,8 +435,8 @@ export default function Home() {
             ></div>
             <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
               <img
-                src="Workspace.png"
-                alt="Workspace"
+                src="/Workshop.png" // ✅ Fixed path
+                alt="Workshop"
                 className="h-56 w-full object-cover"
               />
             </div>
